@@ -1,5 +1,10 @@
 FROM node:alpine
 
-WORKDIR /app
+RUN npm install -g npm@latest
+
 USER node
-ENTRYPOINT npm ci && npm start
+WORKDIR /app
+
+RUN npm config set fund false
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]

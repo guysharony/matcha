@@ -15,22 +15,13 @@ services:
     container_name: back
     depends_on:
       - db
+    environment:
+      - PORT=${BACKEND_PORT}
     ports:
-      - 3000:3000
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
     restart: always
     volumes:
       - ./back:/app
-
-  front:
-    build: .
-    container_name: front
-    depends_on:
-      - back
-    ports:
-      - 4000:4000
-    restart: always
-    volumes:
-      - ./front:/app
 
   db:
     image: postgres:alpine
