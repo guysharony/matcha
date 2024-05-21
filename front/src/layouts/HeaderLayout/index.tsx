@@ -1,7 +1,14 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import useSession from '@/hooks/session.hook';
+
 import './index.style.css';
 
-export default function HeaderLayout() {
-	const signed = true;
+export default () => {
+	const navigate = useNavigate();
+
+	const { session } = useSession();
 
 	return (
 		<div className="header_layout-div">
@@ -10,7 +17,7 @@ export default function HeaderLayout() {
 			</div>
 			<div className="searchbar-div">
 				{
-					signed &&
+					session &&
 					<div className='searchbar-input'>
 						<input placeholder="Search" />
 					</div>
@@ -18,13 +25,18 @@ export default function HeaderLayout() {
 			</div>
 			<div className="menu-div">
 				{
-					signed
+					session
 					? <div className='menu-profile'>
 						
 					</div>
-					: <button className='primary no-select'>
-						Sign up
-					</button>
+					: <>
+						<button onClick={() => navigate('/signin')} className='secondary no-select'>
+							Sign in
+						</button>
+						<button onClick={() => navigate('/signup')} className='primary no-select'>
+							Sign up
+						</button>
+					</>
 				}
 			</div>
 		</div>
