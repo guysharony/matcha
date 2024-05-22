@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import useSession from '@/hooks/session.hook';
 
-import './index.style.css';
+import './HeaderLayout.style.css';
 
 export default () => {
 	const navigate = useNavigate();

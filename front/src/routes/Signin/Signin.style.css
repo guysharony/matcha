@@ -1,0 +1,63 @@
+.sign_in-div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.sign_in-content {
+	display: flex;
+	flex-direction: column;
+	max-width: 300px;
+	width: 100%;
+}
+
+.header-div,
+.inputs-div,
+.continue-div,
+.separator-div {
+	margin-bottom: 40px;
+}
+
+.inputs-div > div {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.inputs-div > div:not(:last-child) {
+	margin-bottom: 10px;
+}
+
+.inputs-div > div > input {
+	background-color: #fff;
+	border: 1px #213548 solid;
+	border-radius: 26px;
+	width: 100%;
+	padding: 10px 20px;
+	height: 45px;
+	box-sizing: border-box;
+	outline: none;
+}
+
+.continue {
+	width: 100%;
+	height: 45px;
+}
+
+.separator-div {
+	display: flex;
+	opacity: 0.5;
+}
+
+.separator-div > div {
+	height: 1px;
+	width: 100%;
+	background: #000;
+	margin: auto 0;
+}
+
+.separator-div > span {
+	margin: 0 10px;
+  margin-bottom: 4px;
+}
