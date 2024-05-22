@@ -16,6 +16,8 @@ services:
     depends_on:
       - db
     environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION=${JWT_EXPIRATION}
       - PORT=${BACKEND_PORT}
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
