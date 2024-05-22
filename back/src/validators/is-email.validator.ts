@@ -1,4 +1,4 @@
-import { createValidator } from "../templates";
+import { createValidator } from '../templates';
 
 export const IsEmail = createValidator<string>((value, propertyKey) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

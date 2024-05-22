@@ -1,4 +1,4 @@
-import { createValidator } from "../templates";
+import { createValidator } from '../templates';
 
 export const NotEmpty = createValidator<any>((value, propertyKey) => {
   if (value === null || value === undefined || value === '') {

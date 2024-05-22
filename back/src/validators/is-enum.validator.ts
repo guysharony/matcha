@@ -1,4 +1,4 @@
-import { createValidator } from "../templates";
+import { createValidator } from '../templates';
 
 export function IsEnum(enumObject: any) {
   return createValidator<any>((value, propertyKey) => {

@@ -1,7 +1,7 @@
 import express from 'express';
-import { pingRoutes } from '../routes/ping.routes';
+import { pingRoutes } from '../routes';
 
-class App {
+export class App {
   express: express.Application;
 
   constructor() {
@@ -17,5 +17,3 @@ class App {
     });
   }
 }
-
-export const app = new App();

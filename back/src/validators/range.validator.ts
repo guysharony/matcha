@@ -1,4 +1,4 @@
-import { createValidator } from "../templates";
+import { createValidator } from '../templates';
 
 export const Range = (min: number, max: number) => createValidator<number>((value, propertyKey) => {
   if (value < min || value > max) {
