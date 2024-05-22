@@ -56,6 +56,12 @@ button.secondary {
 	color: #213548;
 }
 
+button.disable {
+	opacity: 0.4;
+	pointer-events: default;
+	cursor: default;
+}
+
 .no-select {
 	user-select: none; /* Standard syntax */
   -webkit-user-select: none; /* Safari */
