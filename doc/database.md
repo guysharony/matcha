@@ -5,15 +5,15 @@
 | Field | Type | Description |
 | --- | --- | --- |
 | id | int | User ID |
+| email | string | Email |
+| password | string | Password |
+| gender | enum | Gender |
+| sexual_preferences | enum | Sexual preference |
+| biography | string | Biography |
+| profile_picture | string | Profile picture ID |
 | first_name | string | First name |
 | last_name | string | Last name |
-| password | string | Password |
-| email | string | Email |
-| gender | enum | Gender |
-| birthdate | date | Birthdate |
-| profile_picture | string | Profile picture ID |
-| biography | string | Biography |
-| sexual_preferences | enum | Sexual preference |
+| birth_date | date | Birthdate |
 | fame_rating | float | Fame rating |
 | location | string | Location |
 | created_at | date | Creation date |
