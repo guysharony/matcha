@@ -47,14 +47,14 @@
 }
 
 /* Menu */
-.menu-div {
+.header_layout-div .menu-div {
 	padding-left: 16px;
 	display: flex;
 	gap: 10px;
 	padding-right: 2rem;
 }
 
-.menu-profile {
+.header_layout-div .menu-profile {
 	width: 44px;
 	height: 44px;
 	background-color: #242424;

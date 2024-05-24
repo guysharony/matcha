@@ -1,0 +1,21 @@
+.menu_layout-div {
+	background-color: #f9f9f9;
+	transition: 0.2s width;
+	border-radius: 10px;
+	padding: 10px 0;
+  box-sizing: border-box;
+}
+
+.menu_layout-div.active {
+	width: 350px;
+}
+
+.menu_layout-div:not(.active) {
+	width: 0px;
+}
+
+.menu_layout-content {
+	display: flex;
+	flex-direction: column;
+	padding: 0 10px;
+}

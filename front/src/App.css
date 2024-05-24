@@ -13,9 +13,21 @@
 	height: 100vh;
 }
 
-.app-body {
-	width: 100%;
-	margin: 0 auto;
+.app-content {
+	display: flex;
 	flex-grow: 1;
-	overflow-y: auto;
+	overflow: hidden;
+}
+
+.app-content > .menu-div {
+	background-color: #f9f9f9;
+	transition: 0.2s width;
+}
+
+.app-content > .menu-div.active {
+	width: 350px;
+}
+
+.app-content > .menu-div:not(.active) {
+	width: 0px;
 }
