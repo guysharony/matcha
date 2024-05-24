@@ -1,12 +1,13 @@
 import express from 'express';
-import { pingRoutes } from '../routes';
+import { authRoutes } from '../routes';
 
 export class App {
   express: express.Application;
 
   constructor() {
     this.express = express();
-    this.express.use('/ping', pingRoutes);
+    this.express.use(express.json());
+    this.express.use('/auth', authRoutes);
   }
 
   listen(port: number) {

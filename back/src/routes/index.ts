@@ -1,1 +1,1 @@
-export { router as pingRoutes } from './ping.routes';
+export { router as authRoutes } from './auth.routes';

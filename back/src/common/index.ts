@@ -1,1 +1,1 @@
-export { sendError } from './send-error';
+export { sendCode } from './send-code';

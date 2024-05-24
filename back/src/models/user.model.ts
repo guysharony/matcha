@@ -13,16 +13,17 @@ export enum SexualPreferences {
 export interface User {
   id: number;
   email: string;
+  username: string;
   password: string;
-  gender: Gender;
-  sexual_preferences: SexualPreferences;
-  biography: string;
-  profile_picture: string;
-  first_name: string;
-  last_name: string;
-  birth_date: Date;
+  gender: Gender | undefined;
+  sexual_preferences: SexualPreferences | undefined;
+  biography: string | undefined;
+  profile_picture: string | undefined;
+  first_name: string | undefined;
+  last_name: string | undefined;
+  birth_date: Date | undefined;
   fame_rating: number;
-  location: string;
+  location: string | undefined;
   last_connection: Date;
   created_at: Date;
   updated_at: Date;

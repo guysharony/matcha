@@ -1,3 +1,5 @@
-import { PingService } from './ping.service';
+import { AuthService } from './auth.service';
+import { UserService } from './user.service';
 
-export const pingService = new PingService();
+export const authService = new AuthService();
+export const userService = new UserService();

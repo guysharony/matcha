@@ -1,3 +1,3 @@
-import { PingController } from './ping.controller';
+import { AuthController } from './auth.controller';
 
-export const pingController = new PingController();
+export const authController = new AuthController();
