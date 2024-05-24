@@ -5,7 +5,7 @@ import useSession from '@/hooks/session.hook';
 
 import './HeaderLayout.style.css';
 
-export default () => {
+export default ({menu, setMenu}: any) => {
 	const navigate = useNavigate();
 
 	const { session } = useSession();
@@ -26,7 +26,7 @@ export default () => {
 			<div className="menu-div">
 				{
 					session
-					? <div className='menu-profile'>
+					? <div className='menu-profile' onClick={() => setMenu(!menu)}>
 						
 					</div>
 					: <>
