@@ -1,17 +1,26 @@
-import { RegisterDto } from '../dto';
-import { userService } from '.';
+import { compareSync, hashSync } from 'bcrypt';
+import { User } from '../models';
+import { userService } from './user.service';
+import { RegisterDto } from '../dto/register-dto';
+import { LoginDto } from '../dto/login-dto';
 
-export class AuthService {
+class AuthService {
   register(registerDto: RegisterDto) {
-    return userService.create(registerDto);
+    const saltRounds = 12;
+    const user = Object.assign(new User(), registerDto);
+    user.password = hashSync(user.password, saltRounds);
+    return userService.create(user);
   }
 
   confirm(token: string) {
     return `confirm ${token}`;
   }
 
-  login() {
-    return 'login';
+  login(loginDto: LoginDto) {
+    const user = userService.findByLogin(loginDto.login);
+    if (user)
+      return compareSync(loginDto.password, user.password);
+    return false;
   }
 
   removeAccount() {
@@ -22,3 +31,5 @@ export class AuthService {
     return 'request data';
   }
 }
+
+export const authService = new AuthService();

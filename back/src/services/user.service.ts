@@ -1,33 +1,40 @@
-import { RegisterDto } from '../dto';
 import { User } from '../models';
 
-export class UserService {
+class UserService {
   private users: { [key: number]: User } = {};
   private nextId = 1;
 
-  create(dto: RegisterDto) {
+  create(user: User) {
     if (Object.values(this.users).find(
-      u => u.email === dto.email || u.username === dto.username))
+      u => u.email === user.email || u.username === user.username))
       return false;
-    const user: User = {
-      id: this.nextId++,
-      email: dto.email,
-      username: dto.username,
-      password: dto.password,
-      gender: undefined,
-      sexual_preferences: undefined,
-      biography: undefined,
-      profile_picture: undefined,
-      first_name: dto.first_name,
-      last_name: dto.last_name,
-      birth_date: undefined,
-      fame_rating: 0,
-      location: undefined,
-      last_connection: new Date(),
-      created_at: new Date(),
-      updated_at: new Date()
-    };
+    user.id = this.nextId++;
     this.users[user.id] = user;
     return user;
   }
+
+  findById(id: number) {
+    return this.users[id];
+  }
+
+  findByLogin(login: string) {
+    return Object.values(this.users).find(
+      u => u.email === login || u.username === login);
+  }
+
+  update(user: User) {
+    if (!this.users[user.id])
+      return false;
+    this.users[user.id] = user;
+    return true;
+  }
+
+  remove(id: number) {
+    if (!this.users[id])
+      return false;
+    delete this.users[id];
+    return true;
+  }
 }
+
+export const userService = new UserService();

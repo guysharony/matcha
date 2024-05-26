@@ -1,4 +1,5 @@
-import { VALIDATION_OPTIONAL_KEY, ValidatorFunction, createValidator } from '.';
+import { VALIDATION_OPTIONAL_KEY } from './constants';
+import { ValidatorFunction, createValidator } from '.';
 
 function validatorWrapper(validator: ValidatorFunction, defaultMessage: string):
   (message?: string) => PropertyDecorator {

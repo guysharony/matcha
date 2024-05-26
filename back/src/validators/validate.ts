@@ -1,5 +1,6 @@
 import 'reflect-metadata';
-import { VALIDATION_METADATA_KEY, VALIDATION_OPTIONAL_KEY, ValidatorMetadata } from '.';
+import { VALIDATION_METADATA_KEY, VALIDATION_OPTIONAL_KEY } from './constants';
+import { ValidatorMetadata } from '.';
 
 interface ValidationError {
   field: string;

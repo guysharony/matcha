@@ -10,20 +10,20 @@ export enum SexualPreferences {
   Bisexual = 'Bisexual'
 }
 
-export interface User {
+export class User {
   id: number;
   email: string;
   username: string;
   first_name: string;
   last_name: string;
   password: string;
-  gender: Gender | undefined;
-  sexual_preferences: SexualPreferences | undefined;
-  biography: string | undefined;
-  profile_picture: string | undefined;
-  birth_date: Date | undefined;
+  gender: Gender;
+  sexual_preferences: SexualPreferences;
+  biography: string;
+  profile_picture: string;
+  birth_date: Date;
   fame_rating: number;
-  location: string | undefined;
+  location: string;
   last_connection: Date;
   created_at: Date;
   updated_at: Date;

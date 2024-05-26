@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { VALIDATION_METADATA_KEY } from '.';
+import { VALIDATION_METADATA_KEY } from './constants';
 
 export type ValidatorFunction = (value: any) => boolean;
 

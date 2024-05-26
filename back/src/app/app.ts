@@ -1,5 +1,5 @@
 import express from 'express';
-import { authRoutes } from '../routes';
+import { authRouter } from '../routes/auth.routes';
 
 export class App {
   express: express.Application;
@@ -7,7 +7,7 @@ export class App {
   constructor() {
     this.express = express();
     this.express.use(express.json());
-    this.express.use('/auth', authRoutes);
+    this.express.use('/auth', authRouter);
   }
 
   listen(port: number) {
