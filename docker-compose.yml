@@ -1,4 +1,16 @@
 services:
+  db:
+    image: postgres:alpine
+    container_name: db
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
   adminer:
     image: adminer
     container_name: adminer
@@ -7,8 +19,7 @@ services:
     environment:
       - ADMINER_DESIGN=pepa-linha-dark
     ports:
-      - 8080:8080
-    restart: always
+      - "8080:8080"
 
   back:
     build: .
@@ -21,21 +32,23 @@ services:
       - JWT_ACTIVATION_EXPIRATION=${JWT_ACTIVATION_EXPIRATION}
       - JWT_AUTH_SECRET=${JWT_AUTH_SECRET}
       - JWT_AUTH_EXPIRATION=${JWT_AUTH_EXPIRATION}
+      - NODE_ENV=${NODE_ENV}
       - PORT=${BACKEND_PORT}
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
-    restart: always
     volumes:
       - ./back:/app
 
-  db:
-    image: postgres:alpine
-    container_name: db
+  front:
+    build: .
+    container_name: front
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${FRONTEND_PORT}
     ports:
-      - 5432:5432
-    restart: always
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - ./front:/app
 
 volumes:
   postgres:

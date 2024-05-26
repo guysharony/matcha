@@ -1,9 +1,11 @@
 FROM node:alpine
 
-RUN npm install npm@latest -g \
-	&& npm update -g \
-	&& npm config set fund false
+COPY start.sh .
+
+RUN npm config set fund false \
+	&& npm install npm@latest -g \
+	&& npm update -g
 
 WORKDIR /app
 
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["sh", "/start.sh"]
