@@ -1,6 +1,6 @@
 import { User } from '../models';
 
-class UserService {
+class UsersService {
   private users: { [key: number]: User } = {};
   private nextId = 1;
 
@@ -22,6 +22,10 @@ class UserService {
       u => u.email === login || u.username === login);
   }
 
+  list() {
+    return Object.values(this.users);
+  }
+
   update(user: User) {
     if (!this.users[user.id])
       return false;
@@ -37,4 +41,4 @@ class UserService {
   }
 }
 
-export const userService = new UserService();
+export const usersService = new UsersService();

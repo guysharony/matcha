@@ -1,6 +1,6 @@
 import { compareSync, hashSync } from 'bcrypt';
 import { User } from '../models';
-import { userService } from './user.service';
+import { usersService } from './users.service';
 import { RegisterDto } from '../dto/register-dto';
 import { LoginDto } from '../dto/login-dto';
 
@@ -9,7 +9,7 @@ class AuthService {
     const saltRounds = 12;
     const user = Object.assign(new User(), registerDto);
     user.password = hashSync(user.password, saltRounds);
-    return userService.create(user);
+    return usersService.create(user);
   }
 
   confirm(token: string) {
@@ -17,7 +17,7 @@ class AuthService {
   }
 
   login(loginDto: LoginDto) {
-    const user = userService.findByLogin(loginDto.login);
+    const user = usersService.findByLogin(loginDto.login);
     if (user)
       return compareSync(loginDto.password, user.password);
     return false;
