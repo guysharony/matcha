@@ -1,4 +1,4 @@
-import { compareSync, hashSync } from 'bcrypt';
+import { compareSync, hashSync } from 'bcryptjs';
 import { getenv } from '../common';
 
 class BcryptService {
@@ -13,4 +13,4 @@ class BcryptService {
   }
 }
 
-export const bcryptService = new BcryptService(+getenv('SALT_ROUNDS'));
+export const bcryptService = new BcryptService(+getenv('BCRYPT_SALT_ROUNDS'));
