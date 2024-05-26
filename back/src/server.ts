@@ -1,7 +1,4 @@
-import dotenv from 'dotenv';
 import { app } from './app';
-
-dotenv.config();
 
 try {
   app.listen(Number(process.env.PORT));
