@@ -21,9 +21,9 @@ services:
     ports:
       - "8080:8080"
 
-  back:
+  backend:
     build: .
-    container_name: back
+    container_name: backend
     depends_on:
       - db
     environment:
@@ -37,18 +37,18 @@ services:
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
     volumes:
-      - ./back:/app
+      - ./backend:/app
 
-  front:
+  frontend:
     build: .
-    container_name: front
+    container_name: frontend
     environment:
       - NODE_ENV=${NODE_ENV}
       - PORT=${FRONTEND_PORT}
     ports:
       - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     volumes:
-      - ./front:/app
+      - ./frontend:/app
 
 volumes:
   postgres:
