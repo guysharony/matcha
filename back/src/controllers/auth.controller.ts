@@ -3,15 +3,15 @@ import { StatusCodes } from 'http-status-codes';
 import { sendCode } from '../common';
 import { RegisterDto } from '../dto';
 import { authService } from '../services';
+import { validate } from '../validators';
 
 export class AuthController {
   register(req: Request, res: Response) {
-    const body = req.body;
-    if (!body.email || !body.username || !body.first_name || !body.last_name || !body.password)
-      return sendCode(res, StatusCodes.BAD_REQUEST, 'Email and password are required');
-    const registerDto = new RegisterDto(body.email, body.username, body.first_name, body.last_name,
-      body.password);
-    sendCode(res, authService.register(registerDto) ? StatusCodes.CREATED : StatusCodes.CONFLICT);
+    const registerDto = Object.assign(new RegisterDto(), req.body);
+    const errors = validate(registerDto);
+    if (errors.length > 0)
+      return sendCode(res, StatusCodes.BAD_REQUEST, JSON.stringify({ errors }));
+    return sendCode(res, authService.register(registerDto) ? StatusCodes.CREATED : StatusCodes.CONFLICT);
   }
 
   confirm(req: Request, res: Response) {

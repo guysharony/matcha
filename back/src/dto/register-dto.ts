@@ -1,18 +1,14 @@
-// TODO: Add validation
+import { IsEmail, IsFamilyName, IsPassword, IsUsername } from '../validators';
 
 export class RegisterDto {
+  @IsEmail()
   email: string;
+  @IsUsername()
   username: string;
+  @IsFamilyName()
   first_name: string;
+  @IsFamilyName()
   last_name: string;
+  @IsPassword()
   password: string;
-
-  constructor(email: string, username: string, first_name: string, last_name: string,
-    password: string) {
-    this.email = email;
-    this.username = username;
-    this.first_name = first_name;
-    this.last_name = last_name;
-    this.password = password;
-  }
 }

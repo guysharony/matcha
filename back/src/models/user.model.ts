@@ -14,13 +14,13 @@ export interface User {
   id: number;
   email: string;
   username: string;
+  first_name: string;
+  last_name: string;
   password: string;
   gender: Gender | undefined;
   sexual_preferences: SexualPreferences | undefined;
   biography: string | undefined;
   profile_picture: string | undefined;
-  first_name: string | undefined;
-  last_name: string | undefined;
   birth_date: Date | undefined;
   fame_rating: number;
   location: string | undefined;
