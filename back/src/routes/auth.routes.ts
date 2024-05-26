@@ -1,13 +1,11 @@
 import express from 'express';
 import { authController } from '../controllers/auth.controller';
-import { jwtMiddleware } from '../middlewares';
+import { authMiddleware } from '../middlewares/auth.middleware';
 
-const router = express.Router();
+export const authRouter = express.Router();
 
-router.post('/register', authController.register);
-router.get('/confirm/:token', authController.confirm);
-router.post('/login', authController.login);
-router.delete('/remove-account', jwtMiddleware, authController.removeAccount);
-router.get('/request-data', jwtMiddleware, authController.requestData);
-
-export { router as authRouter };
+authRouter.post('/register', authController.register);
+authRouter.get('/confirm/:token', authController.confirm);
+authRouter.post('/login', authController.login);
+authRouter.delete('/remove-account', authMiddleware, authController.removeAccount);
+authRouter.get('/request-data', authMiddleware, authController.requestData);
