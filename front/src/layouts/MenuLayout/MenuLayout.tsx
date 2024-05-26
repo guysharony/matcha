@@ -1,8 +1,8 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+
+import Button from './components/Button/Button';
 
 import './MenuLayout.style.css';
-import Button from './components/Button/Button';
 
 export default ({ menu }: any) => {
 	return (
