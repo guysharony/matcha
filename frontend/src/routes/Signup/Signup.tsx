@@ -7,11 +7,33 @@ import withProtection from '@/hoc/withProtection';
 import './Signup.style.css';
 
 function Signup() {
+	const [firstName, setFirstName] = useState<string>('');
+	const [lastName, setLastName] = useState<string>('');
+	const [username, setUsername] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [confirmPassword, setConfirmPassword] = useState<string>('');
 
-	const disable = email.length == 0 || password.length == 0 || confirmPassword.length == 0;
+	const disable = (
+		firstName.length == 0
+		|| lastName.length == 0
+		|| username.length == 0
+		|| email.length == 0
+		|| password.length == 0
+		|| confirmPassword.length == 0
+	);
+
+	const onChangeFirstName = (e: any) => {
+		setFirstName(e.currentTarget.value);
+	}
+
+	const onChangeLastName = (e: any) => {
+		setLastName(e.currentTarget.value);
+	}
+
+	const onChangeUsername = (e: any) => {
+		setUsername(e.currentTarget.value);
+	}
 
 	const onChangeEmail = (e: any) => {
 		setEmail(e.currentTarget.value);
@@ -25,17 +47,18 @@ function Signup() {
 		setConfirmPassword(e.currentTarget.value);
 	}
 
-	const onContinue = (e: any) => {
-		console.log('tester')
-		fetch.request.form('/auth/register', {
-
-		})
-			.then((e) => {
-				console.log(e)
-			})
-			.catch((e) => {
-				console.log(e)
+	const onContinue = async (e: any) => {
+		try {
+			await fetch.request.json('/auth/register', {
+				first_name: firstName,
+				last_name: lastName,
+				username: username,
+				email: email,
+				password: password
 			});
+		} catch (e: any) {
+			console.log(JSON.parse(e.message))
+		}
 	}
 
 	return (
@@ -45,6 +68,39 @@ function Signup() {
 					<h1 className='no-select'>Sign up</h1>
 				</div>
 				<div className='inputs-div'>
+					<div className='first_name-div'>
+						<input
+							name="first_name"
+							placeholder="First name"
+							autoCapitalize="none"
+							autoComplete="off"
+							autoCorrect="off"
+							type="text"
+							onChange={onChangeFirstName}
+							required />
+					</div>
+					<div className='last_name-div'>
+						<input
+							name="last_name"
+							placeholder="Last name"
+							autoCapitalize="none"
+							autoComplete="off"
+							autoCorrect="off"
+							type="text"
+							onChange={onChangeLastName}
+							required />
+					</div>
+					<div className='username-div'>
+						<input
+							name="username"
+							placeholder="Username"
+							autoCapitalize="none"
+							autoComplete="off"
+							autoCorrect="off"
+							type="text"
+							onChange={onChangeUsername}
+							required />
+					</div>
 					<div className='email-div'>
 						<input
 							name="email"
@@ -69,7 +125,7 @@ function Signup() {
 					</div>
 					<div className='confirm_password-div'>
 						<input
-							name="confirm-password"
+							name="confirm_password"
 							placeholder="Confirm password"
 							autoCapitalize="none"
 							autoComplete="off"

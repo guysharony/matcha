@@ -52,27 +52,19 @@ export default ((tools: Tools) => {
           body: JSON.stringify(body),
         });
 
-        if (response.redirected) window.location.href = response.url;
-
-        if (!tools.setStatus) {
-          tools.temporary.status = response.status;
-        } else {
-          tools.setStatus(response.status);
-        }
-
-	   const contentType = response.headers.get("content-type");
+				/*
+	   		const contentType = response.headers.get("content-type");
         const data =
           contentType && contentType.indexOf("application/json") === -1
             ? null
             : await response.json();
+				*/
+				if (response.status === 400) {
+					const errorData = await response.json();
+					throw new Error(JSON.stringify(errorData.errors));
+				}
 
-	if (data && ((data as FormErrorInterface).code == 422))
-          throw new FormError(
-            (data as FormErrorInterface).code,
-            (data as FormErrorInterface).message
-          );
-
-        return data;
+				return await response.json();
       },
       form: async <T = Record<string, any>>(
         uri: string,
