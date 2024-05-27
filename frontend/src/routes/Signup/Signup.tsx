@@ -1,63 +1,105 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 import fetch from '@/bundles/fetch';
 import withProtection from '@/hoc/withProtection';
 
+import AuthInput from '@/components/AuthInput/AuthInput';
+
+import { ValuesInterface, ErrorsInterface } from './Signup.interface';
+
 import './Signup.style.css';
 
 function Signup() {
-	const [firstName, setFirstName] = useState<string>('');
-	const [lastName, setLastName] = useState<string>('');
-	const [username, setUsername] = useState<string>('');
-	const [email, setEmail] = useState<string>('');
-	const [password, setPassword] = useState<string>('');
-	const [confirmPassword, setConfirmPassword] = useState<string>('');
+	const [values, setValues] = useState<ValuesInterface>({
+		first_name: '',
+		last_name: '',
+		username: '',
+		email: '',
+		password: '',
+		confirm_password: ''
+	});
 
-	const disable = (
-		firstName.length == 0
-		|| lastName.length == 0
-		|| username.length == 0
-		|| email.length == 0
-		|| password.length == 0
-		|| confirmPassword.length == 0
-	);
+	const [errors, setErrors] = useState<ErrorsInterface>({
+		first_name: [],
+		last_name: [],
+		username: [],
+		email: [],
+		password: [],
+		confirm_password: []
+	});
 
-	const onChangeFirstName = (e: any) => {
-		setFirstName(e.currentTarget.value);
+	const disable = Object.values(values).some(value => value.length == 0);
+
+	const resetInputs = () => {
+		setValues({
+			first_name: '',
+			last_name: '',
+			username: '',
+			email: '',
+			password: '',
+			confirm_password: ''
+		});
+		setErrors({
+			first_name: [],
+			last_name: [],
+			username: [],
+			email: [],
+			password: [],
+			confirm_password: []
+		});
 	}
 
-	const onChangeLastName = (e: any) => {
-		setLastName(e.currentTarget.value);
+	const handleValue = (e: any) => {
+		const name = e.currentTarget.name;
+		const value = e.currentTarget.value;
+
+		setValues({
+			...values,
+			[name]: value
+		});
 	}
 
-	const onChangeUsername = (e: any) => {
-		setUsername(e.currentTarget.value);
-	}
+	const handleErrors = (e: any) => {
+		try {
+			const response = JSON.parse(e.message);
 
-	const onChangeEmail = (e: any) => {
-		setEmail(e.currentTarget.value);
-	}
+			const emptyErrors = {
+				first_name: [],
+				last_name: [],
+				username: [],
+				email: [],
+				password: [],
+				confirm_password: []
+			};
 
-	const onChangePassword = (e: any) => {
-		setPassword(e.currentTarget.value);
-	}
+			const newErrors = response.reduce(
+				(acc: any, { field, message }: any) => {
+					acc[field] = acc[field] ? [...acc[field], message] : [message];
+					return acc;
+				},
+				emptyErrors
+			);
 
-	const onChangeConfirmPassword = (e: any) => {
-		setConfirmPassword(e.currentTarget.value);
-	}
+			setErrors(newErrors);
+		} catch (e) {
+			console.log(e)
+		}
+  };
 
 	const onContinue = async (e: any) => {
 		try {
 			await fetch.request.json('/auth/register', {
-				first_name: firstName,
-				last_name: lastName,
-				username: username,
-				email: email,
-				password: password
+				first_name: values.first_name,
+				last_name: values.last_name,
+				username: values.username,
+				email: values.email,
+				password: values.password
 			});
+			resetInputs();
 		} catch (e: any) {
-			console.log(JSON.parse(e.message))
+			handleErrors(e);
 		}
 	}
 
@@ -68,72 +110,43 @@ function Signup() {
 					<h1 className='no-select'>Sign up</h1>
 				</div>
 				<div className='inputs-div'>
-					<div className='first_name-div'>
-						<input
-							name="first_name"
-							placeholder="First name"
-							autoCapitalize="none"
-							autoComplete="off"
-							autoCorrect="off"
-							type="text"
-							onChange={onChangeFirstName}
-							required />
-					</div>
-					<div className='last_name-div'>
-						<input
-							name="last_name"
-							placeholder="Last name"
-							autoCapitalize="none"
-							autoComplete="off"
-							autoCorrect="off"
-							type="text"
-							onChange={onChangeLastName}
-							required />
-					</div>
-					<div className='username-div'>
-						<input
-							name="username"
-							placeholder="Username"
-							autoCapitalize="none"
-							autoComplete="off"
-							autoCorrect="off"
-							type="text"
-							onChange={onChangeUsername}
-							required />
-					</div>
-					<div className='email-div'>
-						<input
-							name="email"
-							placeholder="Email"
-							autoCapitalize="none"
-							autoComplete="off"
-							autoCorrect="off"
-							type="text"
-							onChange={onChangeEmail}
-							required />
-					</div>
-					<div className='password-div'>
-						<input
-							name="password"
-							placeholder="Password"
-							autoCapitalize="none"
-							autoComplete="off"
-							autoCorrect="off"
-							type="password"
-							onChange={onChangePassword}
-							required />
-					</div>
-					<div className='confirm_password-div'>
-						<input
-							name="confirm_password"
-							placeholder="Confirm password"
-							autoCapitalize="none"
-							autoComplete="off"
-							autoCorrect="off"
-							type="password"
-							onChange={onChangeConfirmPassword}
-							required />
-					</div>
+					<AuthInput
+						name='first_name'
+						placeholder='First name'
+						type='text'
+						onChange={handleValue}
+						value={values.first_name}
+						errors={errors.first_name} />
+					<AuthInput
+						name='last_name'
+						placeholder='Last name'
+						type='text'
+						onChange={handleValue}
+						errors={errors.last_name} />
+					<AuthInput
+						name='username'
+						placeholder='Username'
+						type='text'
+						onChange={handleValue}
+						errors={errors.username} />
+					<AuthInput
+						name='email'
+						placeholder='Email'
+						type='text'
+						onChange={handleValue}
+						errors={errors.email} />
+					<AuthInput
+						name='password'
+						placeholder='Password'
+						type='password'
+						onChange={handleValue}
+						errors={errors.password} />
+					<AuthInput
+						name='confirm_password'
+						placeholder='Confirm password'
+						type='password'
+						onChange={handleValue}
+						errors={errors.confirm_password} />
 				</div>
 				<div className='continue-div'>
 					<button
