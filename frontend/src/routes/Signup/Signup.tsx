@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import fetch from '@/bundles/fetch';
 import withProtection from '@/hoc/withProtection';
 
 import './Signup.style.css';
-import { Link } from 'react-router-dom';
 
 function Signup() {
 	const [email, setEmail] = useState<string>('');
@@ -21,6 +23,19 @@ function Signup() {
 
 	const onChangeConfirmPassword = (e: any) => {
 		setConfirmPassword(e.currentTarget.value);
+	}
+
+	const onContinue = (e: any) => {
+		console.log('tester')
+		fetch.request.form('/auth/register', {
+
+		})
+			.then((e) => {
+				console.log(e)
+			})
+			.catch((e) => {
+				console.log(e)
+			});
 	}
 
 	return (
@@ -66,7 +81,8 @@ function Signup() {
 				</div>
 				<div className='continue-div'>
 					<button
-						className={`continue primary no-select${disable ? ' disable' : ''}`}>
+						className={`continue primary no-select${disable ? ' disable' : ''}`}
+						onClick={onContinue}>
 						Continue
 					</button>
 				</div>

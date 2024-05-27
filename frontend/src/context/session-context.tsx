@@ -1,17 +1,5 @@
 import React, { createContext, useState } from "react";
 
-/*
-export interface User {
-	user: UserData | undefined;
-	setUser: Dispatch<SetStateAction<UserData | undefined>>;
-}
-
-export default react.createContext({
-	user: undefined,
-	setUser: () => {}
-} as User);
-*/
-
 export interface ISession {
 	id: string;
 	username: string;
@@ -34,8 +22,8 @@ export const SessionProvider = ({ children }: any) => {
 	React.useEffect(() => {
 		let isReady = true;
 
-		init({ id: 'this_is_an_id', username: 'guysharony' })
-		// init(undefined)
+		// init({ id: 'this_is_an_id', username: 'guysharony' })
+		init(undefined)
 
 		return () => {
 			isReady = false
