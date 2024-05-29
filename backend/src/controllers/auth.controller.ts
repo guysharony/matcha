@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { authService } from '../services/auth.service';
-import { LoginDto } from '../dto/login-dto';
-import { RegisterDto } from '../dto/register-dto';
+import { LoginDto } from '../dto/login.dto';
+import { RegisterDto } from '../dto/register.dto';
 import { sendCode } from '../common';
 import { validate } from '../validators';
 

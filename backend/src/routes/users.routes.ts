@@ -5,3 +5,4 @@ import { usersController } from '../controllers/users.controller';
 export const usersRouter = express.Router();
 
 usersRouter.get('/', authMiddleware, usersController.list);
+usersRouter.get('/me', authMiddleware, usersController.me);

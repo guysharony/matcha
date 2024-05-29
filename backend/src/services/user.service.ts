@@ -1,6 +1,6 @@
 import { User } from '../models';
 
-class UsersService {
+class UserService {
   private users: { [key: number]: User } = {};
   private nextId = 1;
 
@@ -9,6 +9,9 @@ class UsersService {
       u => u.email === user.email || u.username === user.username))
       return false;
     user.id = this.nextId++;
+    user.last_connection = new Date();
+    user.created_at = new Date();
+    user.updated_at = new Date();
     this.users[user.id] = user;
     return user;
   }
@@ -41,4 +44,4 @@ class UsersService {
   }
 }
 
-export const usersService = new UsersService();
+export const userService = new UserService();
