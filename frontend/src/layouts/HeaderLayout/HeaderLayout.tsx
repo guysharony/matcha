@@ -1,14 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import useSession from '@/hooks/session.hook';
 
-import './HeaderLayout.style.css';
 import Button from './components/Button/Button';
 
-export default ({menu, setMenu}: any) => {
-	const navigate = useNavigate();
+import './HeaderLayout.style.css';
 
+export default ({menu, setMenu}: any) => {
 	const { session } = useSession();
 
 	return (

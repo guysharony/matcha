@@ -19,13 +19,13 @@
 }
 
 /* Searchbar */
-.searchbar-div {
+.header_layout-div .searchbar-div {
 	width: 100%;
 	display: flex;
 	justify-content: center;
 }
 
-.searchbar-input {
+.header_layout-div .searchbar-input {
 	background-color: rgba(244, 244, 244);
 	border-radius: 26px;
 	width: 100%;
@@ -34,7 +34,7 @@
 	box-sizing: border-box;
 }
 
-.searchbar-input > input {
+.header_layout-div .searchbar-input > input {
 	border: 0;
 	background-color: transparent;
 	padding: 0;
@@ -60,4 +60,10 @@
 	background-color: #242424;
 	border-radius: 50%;
 	cursor: pointer;
+}
+
+@media (max-width: 600px) {
+	.header_layout-div .searchbar-input {
+		display: none;
+	}
 }

@@ -20,7 +20,8 @@ function App() {
 						<Outlet />
 					</BodyLayout>
 					<MenuLayout
-						menu={menu} />
+						menu={menu}
+						setMenu={setMenu} />
 				</div>
 		</div>
   )

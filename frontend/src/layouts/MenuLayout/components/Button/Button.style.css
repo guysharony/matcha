@@ -15,3 +15,9 @@
 .menu_layout-button.active {
 	background-color: #ececec;
 }
+
+@media (max-width: 600px) {
+	.menu_layout-button {
+		font-size: 1rem;
+	}
+}

@@ -22,8 +22,8 @@ export const SessionProvider = ({ children }: any) => {
 	React.useEffect(() => {
 		let isReady = true;
 
-		// init({ id: 'this_is_an_id', username: 'guysharony' })
-		init(undefined)
+		init({ id: 'this_is_an_id', username: 'guysharony' })
+		// init(undefined)
 
 		return () => {
 			isReady = false

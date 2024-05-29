@@ -69,6 +69,10 @@ button.disable {
   -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
