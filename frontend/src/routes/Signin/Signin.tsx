@@ -1,21 +1,83 @@
 import React, { useState } from 'react';
-import withProtection from '@/hoc/withProtection';
-
-import './Signin.style.css';
 import { Link } from 'react-router-dom';
 
+import fetch from '@/bundles/fetch';
+import withProtection from '@/hoc/withProtection';
+
+import AuthInput from '@/components/AuthInput/AuthInput';
+
+import { ErrorsInterface, ValuesInterface } from './Signin.interface';
+
+import './Signin.style.css';
+
+
 function Signin() {
-	const [email, setEmail] = useState<string>('');
-	const [password, setPassword] = useState<string>('');
+	const [values, setValues] = useState<ValuesInterface>({
+		username: '',
+		password: '',
+	});
 
-	const disable = email.length == 0 || password.length == 0;
+	const [errors, setErrors] = useState<ErrorsInterface>({
+		username: [],
+		password: [],
+	});
 
-	const onChangeEmail = (e: any) => {
-		setEmail(e.currentTarget.value);
+	const disable = Object.values(values).some(value => value.length == 0);
+
+	const resetInputs = () => {
+		setValues({
+			username: '',
+			password: '',
+		});
+		setErrors({
+			username: [],
+			password: [],
+		});
 	}
 
-	const onChangePassword = (e: any) => {
-		setPassword(e.currentTarget.value);
+	const handleValue = (e: any) => {
+		const name = e.currentTarget.name;
+		const value = e.currentTarget.value;
+
+		setValues({
+			...values,
+			[name]: value
+		});
+	}
+
+	const handleErrors = (e: any) => {
+		try {
+			const response = JSON.parse(e.message);
+
+			const emptyErrors = {
+				username: [],
+				password: [],
+			};
+
+			const newErrors = response.reduce(
+				(acc: any, { field, message }: any) => {
+					acc[field] = acc[field] ? [...acc[field], message] : [message];
+					return acc;
+				},
+				emptyErrors
+			);
+
+			setErrors(newErrors);
+		} catch (e) {
+			console.log(e)
+		}
+  };
+
+	const onContinue = async (e: any) => {
+		try {
+			await fetch.request.json('/auth/login', {
+				login: values.username,
+				password: values.password
+			});
+			resetInputs();
+		} catch (e: any) {
+			handleErrors(e);
+		}
 	}
 
 	return (
@@ -25,32 +87,23 @@ function Signin() {
 					<h1 className='no-select'>Sign in</h1>
 				</div>
 				<div className='inputs-div'>
-					<div className='email-div'>
-						<input
-							name="email"
-							placeholder="Email"
-							autoCapitalize="none"
-							autoComplete="off"
-							autoCorrect="off"
-							type="text"
-							onChange={onChangeEmail}
-							required />
-					</div>
-					<div className='password-div'>
-						<input
-							name="password"
-							placeholder="Password"
-							autoCapitalize="none"
-							autoComplete="off"
-							autoCorrect="off"
-							type="password"
-							onChange={onChangePassword}
-							required />
-					</div>
+					<AuthInput
+						name='username'
+						placeholder='Username'
+						type='text'
+						onChange={handleValue}
+						errors={errors.username} />
+					<AuthInput
+						name='password'
+						placeholder='Password'
+						type='password'
+						onChange={handleValue}
+						errors={errors.password} />
 				</div>
 				<div className='continue-div'>
 					<button
-						className={`continue primary no-select${disable ? ' disable' : ''}`}>
+						className={`continue primary no-select${disable ? ' disable' : ''}`}
+						onClick={onContinue}>
 						Continue
 					</button>
 				</div>
