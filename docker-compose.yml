@@ -33,7 +33,8 @@ services:
       - JWT_AUTH_SECRET=${JWT_AUTH_SECRET}
       - JWT_AUTH_EXPIRATION=${JWT_AUTH_EXPIRATION}
       - NODE_ENV=${NODE_ENV}
-      - PORT=${BACKEND_PORT}
+      - BACKEND_PORT=${BACKEND_PORT}
+      - FRONTEND_PORT=${FRONTEND_PORT}
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
     volumes:

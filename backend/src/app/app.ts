@@ -1,26 +1,27 @@
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
-import cors from 'cors';
 import { authRouter } from '../routes/auth.routes';
 import { usersRouter } from '../routes/users.routes';
 
 export class App {
-  express: express.Application;
+  app: express.Application;
 
   constructor() {
     dotenv.config();
-    this.express = express();
-		this.express.use(cors({
-			origin: 'http://localhost:4000',
-			credentials: true
-		}))
-    this.express.use(express.json());
-    this.express.use('/auth', authRouter);
-    this.express.use('/users', usersRouter);
+    this.app = express();
+    this.app.use(cors({
+      origin: `http://localhost:${process.env.FRONTEND_PORT}`,
+      credentials: true
+    }))
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use('/auth', authRouter);
+    this.app.use('/users', usersRouter);
   }
 
   listen(port: number) {
-    this.express.listen(port, () => {
+    this.app.listen(port, () => {
       console.log(`Server listening on port ${port}`);
     }).on('error', (error: Error) => {
       console.error(error);

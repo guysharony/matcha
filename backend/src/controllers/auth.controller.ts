@@ -33,7 +33,10 @@ class AuthController {
 
   @ParseBody(LoginDto)
   login(req: Request, res: Response) {
-    return sendCode(res, authService.login(req.body) ? StatusCodes.OK : StatusCodes.UNAUTHORIZED);
+    const token = authService.login(req.body);
+    if (token)
+      return res.send({ token });
+    return sendCode(res, StatusCodes.UNAUTHORIZED);
   }
 
   removeAccount(_req: Request, res: Response) {

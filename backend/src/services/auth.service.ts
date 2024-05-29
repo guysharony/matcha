@@ -3,6 +3,7 @@ import { usersService } from './users.service';
 import { RegisterDto } from '../dto/register-dto';
 import { LoginDto } from '../dto/login-dto';
 import { bcryptService } from './bcrypt.service';
+import { jwtAuthService } from './jwt.service';
 
 class AuthService {
   register(registerDto: RegisterDto) {
@@ -17,9 +18,9 @@ class AuthService {
 
   login(loginDto: LoginDto) {
     const user = usersService.findByLogin(loginDto.login);
-    if (user)
-      return bcryptService.compare(loginDto.password, user.password);
-    return false;
+    if (user && bcryptService.compare(loginDto.password, user.password))
+      return jwtAuthService.sign({ id: user.id });
+    return null;
   }
 
   removeAccount() {
