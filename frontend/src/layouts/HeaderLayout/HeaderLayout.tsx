@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import useSession from '@/hooks/session.hook';
 
 import './HeaderLayout.style.css';
+import Button from './components/Button/Button';
 
 export default ({menu, setMenu}: any) => {
 	const navigate = useNavigate();
@@ -30,12 +31,8 @@ export default ({menu, setMenu}: any) => {
 						
 					</div>
 					: <>
-						<button onClick={() => navigate('/signin')} className='secondary no-select'>
-							Sign in
-						</button>
-						<button onClick={() => navigate('/signup')} className='primary no-select'>
-							Sign up
-						</button>
+						<Button to="/signin" value="Sign in" className="secondary" />
+						<Button to="/signup" value="Sign up" className="primary" />
 					</>
 				}
 			</div>
