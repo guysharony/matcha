@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import fetch from '@/bundles/fetch';
+import useSession from '@/hooks/session.hook';
 import withProtection from '@/hoc/withProtection';
 
 import AuthInput from '@/components/AuthInput/AuthInput';
@@ -12,6 +13,9 @@ import './Signin.style.css';
 
 
 function Signin() {
+	const navigate = useNavigate();
+	const { session, setSession } = useSession()
+
 	const [values, setValues] = useState<ValuesInterface>({
 		username: '',
 		password: '',
@@ -70,10 +74,13 @@ function Signin() {
 
 	const onContinue = async (e: any) => {
 		try {
-			await fetch.request.json('/auth/login', {
+			const { token } = await fetch.request.post('/auth/login', {
 				login: values.username,
 				password: values.password
 			});
+
+			await setSession(token);
+
 			resetInputs();
 		} catch (e: any) {
 			handleErrors(e);

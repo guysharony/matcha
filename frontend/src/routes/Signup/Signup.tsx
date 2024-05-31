@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import fetch from '@/bundles/fetch';
 import withProtection from '@/hoc/withProtection';
@@ -11,6 +11,8 @@ import { ValuesInterface, ErrorsInterface } from './Signup.interface';
 import './Signup.style.css';
 
 function Signup() {
+	const navigate = useNavigate();
+
 	const [values, setValues] = useState<ValuesInterface>({
 		first_name: '',
 		last_name: '',
@@ -89,13 +91,14 @@ function Signup() {
 
 	const onContinue = async (e: any) => {
 		try {
-			await fetch.request.json('/auth/register', {
+			await fetch.request.post('/auth/register', {
 				first_name: values.first_name,
 				last_name: values.last_name,
 				username: values.username,
 				email: values.email,
 				password: values.password
 			});
+			navigate('/signin');
 			resetInputs();
 		} catch (e: any) {
 			handleErrors(e);
