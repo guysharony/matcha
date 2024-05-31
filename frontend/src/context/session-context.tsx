@@ -16,7 +16,7 @@ export interface ISession {
 
 export interface ISessionContext {
 	session?: ISession;
-	setSession: (token: string) => Promise<void>;
+	setSession: (token?: string) => Promise<void>;
 }
 
 export const SessionContext = createContext<any>(undefined);
@@ -26,9 +26,11 @@ export const SessionProvider = ({ children }: any) => {
 	const [session, _setSession] = useState<ISession | undefined>(undefined);
 
 	const setSession = async (token?: string) => {
-		if (token) {
-			fetch.token.set(token);
+		fetch.token.set(token);
 
+		if (!token) {
+			_setSession(undefined);
+		} else {
 			const user = await fetch.request.get<ISession>('/users/me');
 
 			_setSession(user);

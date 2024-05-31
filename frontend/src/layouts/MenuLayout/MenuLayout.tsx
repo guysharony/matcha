@@ -1,10 +1,19 @@
 import React from 'react';
 
+import useSession from '@/hooks/session.hook';
+
 import Button from './components/Button/Button';
 
 import './MenuLayout.style.css';
 
 export default ({ menu, setMenu }: any) => {
+	const { setSession } = useSession();
+
+	const logout = () => {
+		setMenu(false);
+		setSession(undefined);
+	}
+
 	return (
 		<div className={`menu_layout-div${menu ? ' active' : ''}`}>
 			<div className='menu_layout-flex'>
@@ -19,6 +28,9 @@ export default ({ menu, setMenu }: any) => {
 						<Button to='/' value='Home' />
 						<Button to='/profile' value='Profile' />
 						<Button to='/messages' value='Messages' />
+						<button onClick={logout}>
+							Logout
+						</button>
 					</div>
 				</div>
 				<div className='menu_layout-close'></div>

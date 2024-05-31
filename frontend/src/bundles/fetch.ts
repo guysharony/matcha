@@ -24,15 +24,23 @@ export default ((tools: Tools) => {
 
   return {
     token: {
-			set: (value: string) => {
-				Cookies.set(
-					'token',
-					value, {
-						expires: 1
-					}
-				);
+			set: (value?: string) => {
+				if (!value) {
+					Cookies.remove('token');
 
-				headers['Authorization'] = `Bearer ${value}`;
+					delete headers['Authorization'];
+				} else {
+					Cookies.set(
+						'token',
+						value, {
+							expires: 1
+						}
+					);
+	
+					headers['Authorization'] = `Bearer ${value}`;
+				}
+
+				return value;
 			},
 			get: () => {
 				return Cookies.get('token');
