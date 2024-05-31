@@ -1,15 +1,21 @@
 import { User } from '../models';
 import { userService } from './user.service';
-import { RegisterDto } from '../dto/register.dto';
-import { LoginDto } from '../dto/login.dto';
 import { bcryptService } from './bcrypt.service';
-import { jwtAuthService } from './jwt.service';
+import { emailService } from './email.service';
+import { jwtActivationService, jwtAuthService } from './jwt.service';
+import { LoginDto } from '../dto/login.dto';
+import { RegisterDto } from '../dto/register.dto';
 
 class AuthService {
   register(registerDto: RegisterDto) {
     const user = Object.assign(new User(), registerDto);
     user.password = bcryptService.hash(user.password);
-    return userService.create(user);
+    const createdUser = userService.create(user);
+    if (!createdUser)
+      return null;
+    const token = jwtActivationService.sign({ id: createdUser.id });
+    emailService.sendActivationEmail(createdUser.email, token);
+    return createdUser;
   }
 
   confirm(token: string) {

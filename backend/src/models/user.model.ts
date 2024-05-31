@@ -17,6 +17,7 @@ export class User {
   first_name: string;
   last_name: string;
   password: string;
+  is_activated: boolean;
   gender: Gender;
   sexual_preferences: SexualPreferences;
   biography: string;

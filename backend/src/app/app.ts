@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import { authRouter } from '../routes/auth.routes';
 import { usersRouter } from '../routes/users.routes';
+import { removeNotActivatedTask } from '../tasks/remove_not_activated.task';
 
 export class App {
   app: express.Application;
@@ -16,8 +17,13 @@ export class App {
     }))
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+
+    // Set up routes
     this.app.use('/auth', authRouter);
     this.app.use('/users', usersRouter);
+
+    // Set up tasks
+    removeNotActivatedTask.start();
   }
 
   listen(port: number) {
